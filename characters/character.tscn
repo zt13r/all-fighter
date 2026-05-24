@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://js300hrbbgdc" path="res://characters/character.gd" id="1_qqr4u"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqr4u"]
-size = Vector2(128, 128)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_54qew"]
+custom_solver_bias = 0.469
+radius = 32.0
+height = 128.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_54qew"]
 animations = [{
@@ -72,7 +74,7 @@ animations = [{
 script = ExtResource("1_qqr4u")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2113570327]
-shape = SubResource("RectangleShape2D_qqr4u")
+shape = SubResource("CapsuleShape2D_54qew")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=2115755648]
 sprite_frames = SubResource("SpriteFrames_54qew")
@@ -80,6 +82,8 @@ animation = &"move_while_crouch"
 
 [node name="JumpCooldownTimer" type="Timer" parent="." unique_id=608412356]
 one_shot = true
+
+[node name="BasicAttackTimer" type="Timer" parent="." unique_id=181656414]
 
 [node name="SkillOneTimer" type="Timer" parent="." unique_id=83936874]
 
@@ -90,3 +94,8 @@ one_shot = true
 [node name="UltimateTimer" type="Timer" parent="." unique_id=757155592]
 
 [connection signal="timeout" from="JumpCooldownTimer" to="." method="_on_jump_cooldown_timer_timeout"]
+[connection signal="timeout" from="BasicAttackTimer" to="." method="_on_basic_attack_timer_timeout"]
+[connection signal="timeout" from="SkillOneTimer" to="." method="_on_skill_one_timer_timeout"]
+[connection signal="timeout" from="SkillTwoTimer" to="." method="_on_skill_two_timer_timeout"]
+[connection signal="timeout" from="SkillThreeTimer" to="." method="_on_skill_three_timer_timeout"]
+[connection signal="timeout" from="UltimateTimer" to="." method="_on_ultimate_timer_timeout"]

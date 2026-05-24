@@ -1,17 +1,24 @@
 class_name Character extends CharacterBody2D
 
 
+const GRAVITY_CLAMP: float = 0.1
+
+
 @export_group("Display")
-@export var character_name: String = ""
-@export var character_sprite: Texture = null
+@export var nickname: String = "" ## Character name.
 @export_group("Stats")
-@export var base_health: float = 100.0
-@export var base_damage: float = 5.0
-@export var base_movement_speed: float = 400.0
-@export var base_attack_speed: float = 1.0
+@export var base_health: float = 100.0 ## Base character health.
+@export var base_damage: float = 5.0 ## Base character attack damage.
+@export var base_movement_speed: float = 800.0 ## Base character movement speed.
+@export var base_attack_speed: float = 1.0 ## Base character basic attack speed. Lower = faster.
+@export_group("Skills") # In seconds
+@export var skill_one_cooldown: float = 5.0 ## Skill one cooldown.
+@export var skill_two_cooldown: float = 10.0 ## Skill two cooldown.
+@export var skill_three_cooldown: float = 15.0 ## Skill three cooldown.
+@export var ultimate_cooldown: float = 20.0 ## Ultimate skill cooldown.
 @export_group("Other parameters")
-@export var base_jump_velocity: float = 800.0
-@export var base_crouch_speed: float = 200.0
+@export var base_jump_velocity: float = 1500.0 ## Base character jump height.
+@export var base_crouch_speed: float = 400.0 ## Base character crouch speed.
 
 
 enum State {
@@ -23,10 +30,10 @@ enum State {
 	CROUCHING,
 	MOVING_WHILE_CROUCHING,
 	BASIC_ATTACK,
-	SKILL_ONE_ATTACK,
-	SKILL_TWO_ATTACK,
-	SKILL_THREE_ATTACK,
-	ULT_ATTACK
+	SKILL_ONE,
+	SKILL_TWO,
+	SKILL_THREE,
+	SKILL_ULTIMATE
 }
 
 var current_state: State = State.IDLE
@@ -49,6 +56,7 @@ var animations: Array[String] = [
 
 var direction: float = 0.0
 var can_jump: bool = true
+var can_attack: bool = true
 var can_skill_one: bool = true
 var can_skill_two: bool = true
 var can_skill_three: bool = true
@@ -57,13 +65,13 @@ var can_ult: bool = true
 var health: float = 0.0
 var damage: float = 0.0
 var movement_speed: float = 0.0
-var attack_speed: float = 0.0
 var jump_velocity: float = 0.0
 var crouch_speed: float = 0.0
 
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite
 @onready var jump_cooldown_timer: Timer = $JumpCooldownTimer
+@onready var basic_attack_timer: Timer = $BasicAttackTimer
 @onready var skill_one_timer: Timer = $SkillOneTimer
 @onready var skill_two_timer: Timer = $SkillTwoTimer
 @onready var skill_three_timer: Timer = $SkillThreeTimer
@@ -78,6 +86,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	direction = Input.get_axis("move_left", "move_right")
 	can_jump = jump_cooldown_timer.is_stopped() and is_on_floor()
+	can_attack = basic_attack_timer.is_stopped()
 	can_skill_one = skill_one_timer.is_stopped()
 	can_skill_two = skill_two_timer.is_stopped()
 	can_skill_three = skill_three_timer.is_stopped()
@@ -89,32 +98,34 @@ func _physics_process(_delta: float) -> void:
 		State.MOVING: _process_moving()
 		State.JUMPED: _process_jumped()
 		State.MOVING_WHILE_FALLING: _process_moving_while_falling()
-		State.FALLING: _process_falling()
+		State.FALLING: _process_falling(GRAVITY_CLAMP)
 		State.CROUCHING: _process_crouching()
 		State.MOVING_WHILE_CROUCHING: _process_moving_while_crouching()
 		State.BASIC_ATTACK: _process_basic_attack()
-		State.SKILL_ONE_ATTACK: _process_skill_one()
-		State.SKILL_TWO_ATTACK: _process_skill_two()
-		State.SKILL_THREE_ATTACK: _process_skill_three()
-		State.ULT_ATTACK: _process_ultimate()
+		State.SKILL_ONE: _process_skill_one()
+		State.SKILL_TWO: _process_skill_two()
+		State.SKILL_THREE: _process_skill_three()
+		State.SKILL_ULTIMATE: _process_ultimate()
 
 	# Transition state
 	if Input.is_action_pressed("ultimate") and can_ult:
-		current_state = State.ULT_ATTACK
+		current_state = State.SKILL_ULTIMATE
 	elif Input.is_action_pressed("skill_three") and can_skill_three:
-		current_state = State.SKILL_THREE_ATTACK
+		current_state = State.SKILL_THREE
 	elif Input.is_action_pressed("skill_two") and can_skill_two:
-		current_state = State.SKILL_TWO_ATTACK
+		current_state = State.SKILL_TWO
 	elif Input.is_action_pressed("skill_one") and can_skill_one:
-		current_state = State.SKILL_ONE_ATTACK
+		current_state = State.SKILL_ONE
+	elif Input.is_action_just_pressed("basic_attack") and can_attack:
+		current_state = State.BASIC_ATTACK
 	elif Input.is_action_pressed("jump") and can_jump:
 		current_state = State.JUMPED
 	elif Input.is_action_pressed("crouch") and direction != 0.0:
 		current_state = State.MOVING_WHILE_CROUCHING
-	elif Input.is_action_pressed("crouch"):
-		current_state = State.CROUCHING
 	elif direction != 0.0 and not is_on_floor():
 		current_state = State.MOVING_WHILE_FALLING
+	elif Input.is_action_pressed("crouch"):
+		current_state = State.CROUCHING
 	elif direction != 0.0:
 		current_state = State.MOVING
 	elif not is_on_floor():
@@ -124,6 +135,7 @@ func _physics_process(_delta: float) -> void:
 
 	_handle_animation()
 
+	# Debug
 	print(animations[current_state])
 
 	move_and_slide()
@@ -147,42 +159,47 @@ func _process_jumped() -> void:
 
 func _process_moving_while_falling() -> void:
 	_process_moving()
-	_process_falling()
+	_process_falling(GRAVITY_CLAMP)
 
 
-func _process_falling() -> void:
-	velocity.y += get_gravity().y * 0.1
+func _process_falling(gravity_multiplier: float) -> void:
+	velocity.y += get_gravity().y * gravity_multiplier
 
 
 func _process_crouching() -> void:
 	if is_on_floor():
-		pass # crouch logic
+		pass # crouch logic, maybe shorten collision
 	else:
-		_process_falling()
+		_process_falling(GRAVITY_CLAMP * 2.0)
 
 
 func _process_moving_while_crouching() -> void:
 	velocity.x = direction * crouch_speed
+	_process_crouching()
 
 
 func _process_basic_attack() -> void:
-	pass
+	can_attack = false
 
 
 func _process_skill_one() -> void:
-	pass
+	can_skill_one = true
+	skill_one_timer.start()
 
 
 func _process_skill_two() -> void:
-	pass
+	can_skill_two = true
+	skill_two_timer.start()
 
 
 func _process_skill_three() -> void:
-	pass
+	can_skill_three = false
+	ultimate_timer.start()
 
 
 func _process_ultimate() -> void:
-	pass
+	can_ult = false
+	ultimate_timer.start()
 
 
 func _handle_animation() -> void:
@@ -203,10 +220,35 @@ func _setup_stats() -> void:
 	health = base_health
 	damage = base_damage
 	movement_speed = base_movement_speed
-	attack_speed = base_attack_speed
 	jump_velocity = base_jump_velocity
 	crouch_speed = base_crouch_speed
+
+	basic_attack_timer.wait_time = base_attack_speed
+	skill_one_timer.wait_time = skill_one_cooldown
+	skill_two_timer.wait_time = skill_two_cooldown
+	skill_three_timer.wait_time = skill_three_cooldown
+	ultimate_timer.wait_time = ultimate_cooldown
 
 
 func _on_jump_cooldown_timer_timeout() -> void:
 	can_jump = true
+
+
+func _on_basic_attack_timer_timeout() -> void:
+	can_attack = true
+
+
+func _on_skill_one_timer_timeout() -> void:
+	can_skill_one = true
+
+
+func _on_skill_two_timer_timeout() -> void:
+	can_skill_two = true
+
+
+func _on_skill_three_timer_timeout() -> void:
+	can_skill_three = true
+
+
+func _on_ultimate_timer_timeout() -> void:
+	can_ult = true
