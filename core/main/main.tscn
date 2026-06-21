@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2vs3bqci83oq"]
 
-[ext_resource type="PackedScene" uid="uid://d1ksrfbf37nu8" path="res://characters/fritz/fritz.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d1ksrfbf37nu8" path="res://gameplay/character/char1/char1.tscn" id="1_ig7tw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ig7tw"]
 

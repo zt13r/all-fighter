@@ -2,21 +2,21 @@ extends Character
 
 
 @export_group("Basic Attack Combo")
-@export var combo_time: float = 0.7
+@export var combo_attack_window : float = 0.7
 @export_subgroup("Dash")
-@export var dash_punch_distance: float = 5000.0
-@export var dash_punch_duration: float = 1.0
-@export var dash_punch_speed: float = 1200.0
+@export var dash_punch_distance : float = 5000.0
+@export var dash_punch_duration : float = 1.0
+@export var dash_punch_speed : float = 1200.0
 @export_subgroup("Hitbox Size")
-@export var jab_hitbox_size: Vector2 = Vector2.ZERO
-@export var cross_hitbox_size: Vector2 = Vector2.ZERO
-@export var front_kick_hitbox_size: Vector2 = Vector2.ZERO
-@export var dash_punch_hitbox_size: Vector2 = Vector2.ZERO
+@export var jab_hitbox_size : Vector2 = Vector2.ZERO
+@export var cross_hitbox_size : Vector2 = Vector2.ZERO
+@export var front_kick_hitbox_size : Vector2 = Vector2.ZERO
+@export var dash_punch_hitbox_size : Vector2 = Vector2.ZERO
 @export_subgroup("Hitbox Position")
-@export var jab_hitbox_position: Vector2 = Vector2.ZERO
-@export var cross_hitbox_position: Vector2 = Vector2.ZERO
-@export var front_kick_hitbox_position: Vector2 = Vector2.ZERO
-@export var dash_punch_hitbox_position: Vector2 = Vector2.ZERO
+@export var jab_hitbox_position : Vector2 = Vector2.ZERO
+@export var cross_hitbox_position : Vector2 = Vector2.ZERO
+@export var front_kick_hitbox_position : Vector2 = Vector2.ZERO
+@export var dash_punch_hitbox_position : Vector2 = Vector2.ZERO
 
 
 enum AttackPhase {
@@ -26,20 +26,20 @@ enum AttackPhase {
 	DASH_PUNCH,
 }
 
-var current_phase: AttackPhase = AttackPhase.JAB
+var current_phase : AttackPhase = AttackPhase.JAB
 
-var jab_damage: float = 0.0
-var cross_damage: float = 0.0
-var front_kick_damage: float = 0.0
-var dash_punch_damage: float = 0.0
+var jab_damage : float = 0.0
+var cross_damage : float = 0.0
+var front_kick_damage : float = 0.0
+var dash_punch_damage : float = 0.0
 
 
-@onready var basic_attack_combo_timer: Timer = $Timers/BasicAttackComboTimer
+@onready var basic_attack_combo_timer : Timer = %BasicAttackComboTimer
 
 
 func _ready() -> void:
 	super()
-	basic_attack_combo_timer.wait_time = combo_time
+	basic_attack_combo_timer.wait_time = combo_attack_window
 
 
 func _process_basic_attack() -> void:
@@ -63,22 +63,22 @@ func _process_basic_attack() -> void:
 
 
 func _jab() -> void:
-	print("fritz_combo1_jab")
+	print("char1_combo1_jab")
 	_set_hitbox(current_phase)
 
 
 func _cross() -> void:
-	print("fritz_combo2_cross")
+	print("char1_combo2_cross")
 	_set_hitbox(current_phase)
 
 
 func _front_kick() -> void:
-	print("fritz_combo3_frontkick")
+	print("char1_combo3_frontkick")
 	_set_hitbox(current_phase)
 
 
 func _dash_punch() -> void:
-	print("fritz_combo4_dashpunch")
+	print("char1_combo4_dashpunch")
 	await wait(dash_punch_duration)
 	velocity.x = dash_punch_distance * last_direction
 	_set_hitbox(current_phase)
@@ -115,6 +115,7 @@ func _setup() -> void:
 
 
 func _set_hitbox(phase: AttackPhase) -> void:
+	# Temporary
 	match phase:
 		AttackPhase.JAB:
 			hitbox.position = Vector2(jab_hitbox_position.x * last_direction, jab_hitbox_position.y)

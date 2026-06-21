@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://sx426t40x37p"]
 
-[ext_resource type="Script" uid="uid://js300hrbbgdc" path="res://characters/character.gd" id="1_qqr4u"]
-[ext_resource type="Script" uid="uid://xp8dcyfpo2gf" path="res://hbox/hurtbox.gd" id="2_qqr4u"]
-[ext_resource type="Script" uid="uid://cof3vg7kuwka2" path="res://hbox/hitbox.gd" id="3_3fwhk"]
+[ext_resource type="Script" uid="uid://js300hrbbgdc" path="res://gameplay/character/character.gd" id="1_qqr4u"]
+[ext_resource type="PackedScene" uid="uid://cexk3woowaoqx" path="res://gameplay/combat/hurtbox/hurtbox.tscn" id="2_ogbvh"]
+[ext_resource type="PackedScene" uid="uid://cwotgr4gs8gsy" path="res://gameplay/combat/hitbox/hitbox.tscn" id="3_5ox30"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_54qew"]
 custom_solver_bias = 0.469
@@ -112,6 +112,32 @@ size = Vector2(84, 20)
 [node name="Character" type="CharacterBody2D" unique_id=936889375]
 script = ExtResource("1_qqr4u")
 
+[node name="Timers" type="Node" parent="." unique_id=1378299738]
+
+[node name="JumpCooldownTimer" type="Timer" parent="Timers" unique_id=608412356]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="BasicAttackCooldownTimer" type="Timer" parent="Timers" unique_id=181656414]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SkillOneCooldownTimer" type="Timer" parent="Timers" unique_id=83936874]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SkillTwoCooldownTimer" type="Timer" parent="Timers" unique_id=907735014]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SkillThreeCooldownTimer" type="Timer" parent="Timers" unique_id=911897206]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SkillUltimateCooldownTimer" type="Timer" parent="Timers" unique_id=757155592]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2113570327]
 shape = SubResource("CapsuleShape2D_54qew")
 debug_color = Color(0, 1, 0, 0.41960785)
@@ -120,42 +146,21 @@ debug_color = Color(0, 1, 0, 0.41960785)
 sprite_frames = SubResource("SpriteFrames_54qew")
 animation = &"USE_SKILL_ULTIMATE"
 
-[node name="Hurtbox" type="Area2D" parent="." unique_id=1042692501]
-script = ExtResource("2_qqr4u")
-metadata/_custom_type_script = "uid://xp8dcyfpo2gf"
+[node name="Hurtbox" parent="." unique_id=2064079477 instance=ExtResource("2_ogbvh")]
+position = Vector2(72, -16)
 
 [node name="Collision" type="CollisionShape2D" parent="Hurtbox" unique_id=1926244224]
+position = Vector2(-72, 16)
 shape = SubResource("CapsuleShape2D_3fwhk")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1526398671]
-script = ExtResource("3_3fwhk")
-metadata/_custom_type_script = "uid://cof3vg7kuwka2"
+[node name="Hitbox" parent="." unique_id=2031754514 instance=ExtResource("3_5ox30")]
 
 [node name="Collision" type="CollisionShape2D" parent="Hitbox" unique_id=782901455]
+unique_name_in_owner = true
 position = Vector2(72, -16)
 shape = SubResource("RectangleShape2D_mdkfl")
 disabled = true
 debug_color = Color(1, 0, 0, 0.41960785)
-
-[node name="Timers" type="Node" parent="." unique_id=1378299738]
-
-[node name="JumpCooldownTimer" type="Timer" parent="Timers" unique_id=608412356]
-one_shot = true
-
-[node name="BasicAttackCooldownTimer" type="Timer" parent="Timers" unique_id=181656414]
-one_shot = true
-
-[node name="SkillOneCooldownTimer" type="Timer" parent="Timers" unique_id=83936874]
-one_shot = true
-
-[node name="SkillTwoCooldownTimer" type="Timer" parent="Timers" unique_id=907735014]
-one_shot = true
-
-[node name="SkillThreeCooldownTimer" type="Timer" parent="Timers" unique_id=911897206]
-one_shot = true
-
-[node name="SkillUltimateCooldownTimer" type="Timer" parent="Timers" unique_id=757155592]
-one_shot = true
 
 [connection signal="timeout" from="Timers/JumpCooldownTimer" to="." method="_on_jump_cooldown_timer_timeout"]
 [connection signal="timeout" from="Timers/BasicAttackCooldownTimer" to="." method="_on_basic_attack_timer_timeout"]
