@@ -1,4 +1,4 @@
-class_name AirborneState
+class_name JumpState
 extends State
 
 
@@ -11,13 +11,14 @@ func exit() -> void:
 
 
 func process() -> void:
-	pass
+	_propagate_state()
 
 
 func physics_process() -> void:
+	character.velocity.y -= character.jump_velocity
+	_propagate_state()
 	_handle_transitions()
 
 
 func _handle_transitions() -> void:
-	if character.is_on_floor():
-		state_changed.emit(root_fsm.current_state, "idle")
+	pass

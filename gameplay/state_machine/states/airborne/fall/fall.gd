@@ -2,15 +2,18 @@ class_name FallState
 extends State
 
 
-var gravity : float = 0.0
+var direction : float = 0.0
+var gravity_multiplier : float = 0.0
 
 
 func enter() -> void:
-	gravity = character.get_gravity().y
+	direction = 0.0
+	gravity_multiplier = 0.0
 
 
 func exit() -> void:
-	gravity = 0.0
+	direction = 0.0
+	gravity_multiplier = 0.0
 
 
 func process() -> void:
@@ -18,7 +21,19 @@ func process() -> void:
 
 
 func physics_process() -> void:
-	character.velocity.y += gravity
+	# Fall faster
+	if Input.is_action_pressed("crouch"):
+		gravity_multiplier = 2.0
+	else:
+		gravity_multiplier = 1.0
+
+	# Falling
+	character.velocity.y += Util.GRAVITY * gravity_multiplier
+
+	# Moving
+	direction = Input.get_axis("move_left", "move_right")
+	character.velocity.x = direction * character.movement_speed
+
 	_propagate_state()
 	_handle_transitions()
 

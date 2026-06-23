@@ -1,4 +1,4 @@
-class_name MoveState
+class_name CrouchState
 extends State
 
 
@@ -19,12 +19,12 @@ func process() -> void:
 
 func physics_process() -> void:
 	direction = Input.get_axis("move_left", "move_right")
-	character.velocity.x = direction * character.movement_speed
+	character.velocity.x = direction * character.crouch_speed
 
 	_propagate_state()
 	_handle_transitions()
 
 
 func _handle_transitions() -> void:
-	if direction == 0.0: # Idle
+	if not Input.is_action_pressed("crouch"): # Idle
 		state_changed.emit(self, "idle")

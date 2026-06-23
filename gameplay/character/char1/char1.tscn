@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://daudspxoy4ky2" path="res://gameplay/state_machine/states/grounded/idle/idle.gd" id="3_j23gs"]
 [ext_resource type="Script" uid="uid://cv8qijfthn4cq" path="res://gameplay/state_machine/states/grounded/move/move.gd" id="3_lq6bm"]
 [ext_resource type="Script" uid="uid://cid6ko0dm3bjr" path="res://gameplay/state_machine/states/airborne/fall/fall.gd" id="3_y87d0"]
+[ext_resource type="Script" uid="uid://wbhtoph63r4u" path="res://gameplay/state_machine/states/grounded/jump/jump.gd" id="7_y87d0"]
+[ext_resource type="Script" uid="uid://br2xn3fwv3460" path="res://gameplay/state_machine/states/grounded/crouch/crouch.gd" id="8_1aa7j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0bv7v"]
 animations = [{
@@ -127,6 +129,14 @@ metadata/_custom_type_script = "uid://daudspxoy4ky2"
 [node name="Move" type="Node" parent="StateMachine/Grounded" index="1" unique_id=1570434390]
 script = ExtResource("3_lq6bm")
 metadata/_custom_type_script = "uid://cv8qijfthn4cq"
+
+[node name="Jump" type="Node" parent="StateMachine/Grounded" index="2" unique_id=44844379]
+script = ExtResource("7_y87d0")
+metadata/_custom_type_script = "uid://wbhtoph63r4u"
+
+[node name="Crouch" type="Node" parent="StateMachine/Grounded" index="3" unique_id=569448730]
+script = ExtResource("8_1aa7j")
+metadata/_custom_type_script = "uid://br2xn3fwv3460"
 
 [node name="Collision" type="CollisionShape2D" parent="." index="3" unique_id=508983584]
 shape = SubResource("CapsuleShape2D_lq6bm")

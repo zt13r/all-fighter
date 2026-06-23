@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export_group("Base Parameters")
 @export var base_health : float = 100.0 ## Base character health.
 @export var base_movement_speed : float = 800.0 ## Base character movement speed.
-@export var base_jump_velocity : float = 1000.0 ## Base character jump height.
+@export var base_jump_velocity : float = 750.0 ## Base character jump height.
 @export var base_crouch_speed : float = 400.0 ## Base character crouch speed.
 @export_group("Skills")
 @export_subgroup("Damage")
@@ -43,9 +43,10 @@ var crouch_speed : float = 0.0
 
 func _ready() -> void:
 	_init_stats()
+	print(get_gravity())
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 

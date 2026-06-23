@@ -1,6 +1,9 @@
 class_name Util
 
 
+const GRAVITY : float = 98.0
+
+
 ## Recursive getter for all children of a node
 ## and all of their children's children. Is children a real word?
 static func get_descendants(node : Node) -> Array[Node]:

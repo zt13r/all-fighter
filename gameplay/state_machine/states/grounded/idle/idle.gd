@@ -19,8 +19,8 @@ func process() -> void:
 
 func physics_process() -> void:
 	input = Input.get_axis("move_left", "move_right")
-	_propagate_state()
 
+	_propagate_state()
 	_handle_transitions()
 
 

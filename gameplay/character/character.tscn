@@ -132,10 +132,3 @@ one_shot = true
 [node name="StateMachine" type="Node" parent="." unique_id=167204576]
 script = ExtResource("2_15w7j")
 metadata/_custom_type_script = "uid://cufp8tes03mtu"
-
-[connection signal="timeout" from="Timers/JumpCooldownTimer" to="." method="_on_jump_cooldown_timer_timeout"]
-[connection signal="timeout" from="Timers/BasicAttackCooldownTimer" to="." method="_on_basic_attack_timer_timeout"]
-[connection signal="timeout" from="Timers/SkillOneCooldownTimer" to="." method="_on_skill_one_timer_timeout"]
-[connection signal="timeout" from="Timers/SkillTwoCooldownTimer" to="." method="_on_skill_two_timer_timeout"]
-[connection signal="timeout" from="Timers/SkillThreeCooldownTimer" to="." method="_on_skill_three_timer_timeout"]
-[connection signal="timeout" from="Timers/SkillUltimateCooldownTimer" to="." method="_on_ultimate_timer_timeout"]

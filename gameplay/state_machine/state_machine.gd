@@ -28,13 +28,14 @@ func _physics_process(_delta : float) -> void:
 
 
 func _init_states() -> void:
+	# Add state nodes to local "states" dictionary
 	var fsm_children : Array = Util.get_descendants(self)
-	print(fsm_children)
 	for child in fsm_children:
 		if child is State:
 			states[child.name.to_lower()] = child
 			child.connect("state_changed", _on_state_changed)
 
+	# Set initial state
 	if initial_state != null:
 		initial_state.enter()
 		current_state = initial_state

@@ -7,8 +7,16 @@ extends Node
 signal state_changed(state : State, new_state_name : String)
 
 
-var parent_state : State = null
+@export var parent_state : State :
+	get:
+		if parent_state == null:
+			parent_state = (get_parent()) if (get_parent() is State) else (null)
+		return parent_state
+
+
 var character : Character = null
+
+var propagation_enabled : bool = true
 
 
 @onready var root_fsm : StateMachine = %StateMachine
@@ -18,6 +26,8 @@ func _ready() -> void:
 	if root_fsm == null:
 		push_error("Can't assign character because StateMachine is null.")
 		return
+	if parent_state == null:
+		propagation_enabled = false
 	character = root_fsm.character_parent as Character
 
 
@@ -30,10 +40,7 @@ func _ready() -> void:
 
 
 func _propagate_state() -> void:
-	parent_state = (get_parent()) if (get_parent() is State) else (null)
-	if parent_state == null:
-		print("State ", name.to_upper(), " has no parent state.")
+	if not propagation_enabled:
 		return
-
 	parent_state.process()
 	parent_state.physics_process()
