@@ -23,7 +23,7 @@ func process() -> void:
 func physics_process() -> void:
 	# Fall faster
 	if Input.is_action_pressed("crouch"):
-		gravity_multiplier = 2.0
+		gravity_multiplier = 5.0
 	else:
 		gravity_multiplier = 1.0
 
@@ -33,6 +33,11 @@ func physics_process() -> void:
 	# Moving
 	direction = Input.get_axis("move_left", "move_right")
 	character.velocity.x = direction * character.movement_speed
+	_character_facing()
+
+	# Jump buffer
+	if Input.is_action_just_pressed("jump"):
+		character.jump_buffer_timer.start()
 
 	_propagate_state()
 	_handle_transitions()
@@ -40,3 +45,11 @@ func physics_process() -> void:
 
 func _handle_transitions() -> void:
 	pass
+
+
+func _character_facing() -> void:
+	match direction:
+		-1: character.facing_right = false
+		1: character.facing_right = true
+		0: pass
+		_: pass

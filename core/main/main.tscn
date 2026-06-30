@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2vs3bqci83oq"]
 
-[ext_resource type="PackedScene" uid="uid://d1ksrfbf37nu8" path="res://gameplay/character/char1/char1.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d1ksrfbf37nu8" path="res://gameplay/character/guy/guy.tscn" id="1_ig7tw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ig7tw"]
 
@@ -22,29 +22,8 @@ shape = SubResource("WorldBoundaryShape2D_ig7tw")
 
 [node name="EntityRoot" type="Node2D" parent="World" unique_id=675102177]
 
-[node name="Char1" parent="World/EntityRoot" unique_id=936889375 instance=ExtResource("1_ig7tw")]
-position = Vector2(450, 252)
-base_health = null
-base_movement_speed = null
-base_jump_velocity = null
-base_crouch_speed = null
-basic_attack_damage = null
-skill_one_damage = null
-skill_two_damage = null
-skill_three_damage = null
-ultimate_damage = null
-skill_one_cooldown = null
-skill_two_cooldown = null
-skill_three_cooldown = null
-ultimate_cooldown = null
-skill_one_hitbox_size = null
-skill_two_hitbox_size = null
-skill_three_hitbox_size = null
-ultimate_hitbox_size = null
-skill_one_hitbox_position = null
-skill_two_hitbox_position = null
-skill_three_hitbox_position = null
-ultimate_hitbox_position = null
+[node name="Guy" parent="World/EntityRoot" unique_id=936889375 instance=ExtResource("1_ig7tw")]
+position = Vector2(591, 297)
 
 [node name="EffectRoot" type="Node2D" parent="World" unique_id=639667014]
 

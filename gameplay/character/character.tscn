@@ -2,133 +2,61 @@
 
 [ext_resource type="Script" uid="uid://js300hrbbgdc" path="res://gameplay/character/character.gd" id="1_qqr4u"]
 [ext_resource type="Script" uid="uid://cufp8tes03mtu" path="res://gameplay/state_machine/state_machine.gd" id="2_15w7j"]
+[ext_resource type="Script" uid="uid://cof3vg7kuwka2" path="res://gameplay/components/hitbox/hitbox.gd" id="3_5ox30"]
+[ext_resource type="Script" uid="uid://xp8dcyfpo2gf" path="res://gameplay/components/hurtbox/hurtbox.gd" id="4_h7e7v"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_54qew"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"CROUCHING",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"FALLING",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"IDLE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"JUMPED",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"JUMPING",
-"speed": 4.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"MOVING",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"MOVING_WHILE_CROUCHING",
-"speed": 4.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"MOVING_WHILE_FALLING",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USE_BASIC_ATTACK",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USE_SKILL_ONE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USE_SKILL_THREE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USE_SKILL_TWO",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USE_SKILL_ULTIMATE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USING_BASIC_ATTACK",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USING_SKILL_ONE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USING_SKILL_THREE",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USING_SKILL_TWO",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"USING_SKILL_ULTIMATE",
-"speed": 5.0
-}]
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ox30"]
+animations = []
 
 [node name="Character" type="CharacterBody2D" unique_id=936889375]
 script = ExtResource("1_qqr4u")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2115755648]
-sprite_frames = SubResource("SpriteFrames_54qew")
-animation = &"USE_SKILL_ULTIMATE"
-
 [node name="Timers" type="Node" parent="." unique_id=1378299738]
 
-[node name="JumpCooldownTimer" type="Timer" parent="Timers" unique_id=608412356]
+[node name="CooldownTimers" type="Node" parent="Timers" unique_id=1773531876]
+
+[node name="JumpCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=608412356]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="BasicAttackCooldownTimer" type="Timer" parent="Timers" unique_id=181656414]
+[node name="BasicAttackCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=181656414]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SkillOneCooldownTimer" type="Timer" parent="Timers" unique_id=83936874]
+[node name="SkillOneCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=83936874]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SkillTwoCooldownTimer" type="Timer" parent="Timers" unique_id=907735014]
+[node name="SkillTwoCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=907735014]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SkillThreeCooldownTimer" type="Timer" parent="Timers" unique_id=911897206]
+[node name="SkillThreeCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=911897206]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SkillUltimateCooldownTimer" type="Timer" parent="Timers" unique_id=757155592]
+[node name="SkillUltimateCooldownTimer" type="Timer" parent="Timers/CooldownTimers" unique_id=757155592]
 unique_name_in_owner = true
+one_shot = true
+
+[node name="Misc" type="Node" parent="Timers" unique_id=650038178]
+
+[node name="JumpBufferTimer" type="Timer" parent="Timers/Misc" unique_id=1245549578]
 one_shot = true
 
 [node name="StateMachine" type="Node" parent="." unique_id=167204576]
 script = ExtResource("2_15w7j")
 metadata/_custom_type_script = "uid://cufp8tes03mtu"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2115755648]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_5ox30")
+animation = &""
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=130310705]
+script = ExtResource("4_h7e7v")
+metadata/_custom_type_script = "uid://xp8dcyfpo2gf"
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=901633141]
+script = ExtResource("3_5ox30")
+metadata/_custom_type_script = "uid://cof3vg7kuwka2"
