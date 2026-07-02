@@ -26,5 +26,5 @@ func _init_character() -> void:
 
 
 func _on_basic_attack_duration_timer_timeout() -> void:
-	super()
+	basic_attack_cooldown_timer.start()
 	basic_attack_combo_timer.start()

@@ -2,17 +2,17 @@ class_name GuyJabState
 extends State
 
 
-@onready var guy : GuyCharacter = character as GuyCharacter
+var guy : GuyCharacter = null
 
 
 func enter() -> void:
 	_propagate_enter()
+	guy = character as GuyCharacter
 	guy.basic_attack_duration_timer.wait_time = guy.jab_duration
 	guy.basic_attack_duration_timer.start()
 
 
 func exit() -> void:
-	guy.basic_attack_combo_timer.stop()
 	guy.basic_attack_duration_timer.stop()
 	_propagate_exit()
 
@@ -32,7 +32,4 @@ func physics_process() -> void:
 
 
 func _handle_transitions() -> void:
-	if guy.basic_attack_cooldown_timer.is_stopped() and not guy.basic_attack_combo_timer.is_stopped():
-		state_changed.emit(self, "hook")
-	else:
-		state_changed.emit(self, "idle")
+	state_changed.emit(self, "idle")

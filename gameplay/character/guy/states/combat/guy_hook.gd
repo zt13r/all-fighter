@@ -2,11 +2,12 @@ class_name GuyHookState
 extends State
 
 
-@onready var guy : GuyCharacter = character as GuyCharacter
+var guy : GuyCharacter = null
 
 
 func enter() -> void:
 	_propagate_enter()
+	guy = character as GuyCharacter
 	guy.basic_attack_duration_timer.wait_time = guy.hook_duration
 	guy.basic_attack_duration_timer.start()
 

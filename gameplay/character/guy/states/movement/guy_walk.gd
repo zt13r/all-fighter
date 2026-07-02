@@ -2,7 +2,12 @@ class_name GuyWalkState
 extends WalkState
 
 
-@onready var guy : GuyCharacter = character as GuyCharacter
+var guy : GuyCharacter = null
+
+
+func enter() -> void:
+	super()
+	guy = character as GuyCharacter
 
 
 func _handle_transitions() -> void:
