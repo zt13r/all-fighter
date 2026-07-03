@@ -1,4 +1,4 @@
-class_name GroundedMovementState
+class_name CrouchState
 extends State
 
 
@@ -8,6 +8,7 @@ var direction : float = 0.0
 func enter() -> void:
 	_propagate_enter()
 	direction = 0.0
+	character.sprite.play("crouch")
 
 
 func exit() -> void:
@@ -24,9 +25,11 @@ func physics_process() -> void:
 
 	if has_parent_state():
 		direction = parent_state.direction
+	character.velocity.x = direction * character.crouch_speed
 
 	_handle_transitions()
 
 
 func _handle_transitions() -> void:
-	pass
+	if not Input.is_action_pressed("crouch"):
+		state_changed.emit(self, "idle")

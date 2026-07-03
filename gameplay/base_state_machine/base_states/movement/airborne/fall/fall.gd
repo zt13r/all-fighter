@@ -10,6 +10,7 @@ func enter() -> void:
 	_propagate_enter()
 	direction = 0.0
 	gravity_multiplier = 0.0
+	character.sprite.play("fall")
 
 
 func exit() -> void:

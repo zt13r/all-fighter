@@ -2,33 +2,88 @@
 
 [ext_resource type="PackedScene" uid="uid://sx426t40x37p" path="res://gameplay/character/character.tscn" id="1_qsnf0"]
 [ext_resource type="Script" uid="uid://c367rwdnxod2e" path="res://gameplay/character/guy/guy.gd" id="2_dccpk"]
-[ext_resource type="Script" uid="uid://d1a4td2u04rch" path="res://gameplay/base_state_machine/base_states/airborne/airborne.gd" id="2_h1m75"]
-[ext_resource type="Script" uid="uid://d2dfjgcvb2ijq" path="res://gameplay/base_state_machine/base_states/grounded/grounded.gd" id="2_lq6bm"]
-[ext_resource type="Script" uid="uid://cid6ko0dm3bjr" path="res://gameplay/base_state_machine/base_states/airborne/movement/fall/fall.gd" id="3_y87d0"]
-[ext_resource type="Script" uid="uid://dbp0ttp2aws56" path="res://gameplay/base_state_machine/base_states/airborne/movement/airborne_movement.gd" id="4_rghhw"]
-[ext_resource type="Script" uid="uid://hp7diaoxeed5" path="res://gameplay/base_state_machine/base_states/grounded/movement/grounded_movement.gd" id="6_dvsx1"]
-[ext_resource type="Script" uid="uid://crv6jkk70460e" path="res://gameplay/base_state_machine/base_states/airborne/combat/airborne_combat.gd" id="6_jdg48"]
-[ext_resource type="Script" uid="uid://l2ee0vrge74q" path="res://gameplay/base_state_machine/base_states/airborne/ouch/airborne_ouch.gd" id="7_thu45"]
-[ext_resource type="Script" uid="uid://wbhtoph63r4u" path="res://gameplay/base_state_machine/base_states/grounded/movement/jump/jump.gd" id="7_y87d0"]
-[ext_resource type="Script" uid="uid://br2xn3fwv3460" path="res://gameplay/base_state_machine/base_states/grounded/movement/crouch/crouch.gd" id="8_1aa7j"]
-[ext_resource type="Texture2D" uid="uid://dt3vgvq2rmc6" path="res://assets/art/characters/guy.png" id="9_an5cp"]
+[ext_resource type="Script" uid="uid://d1a4td2u04rch" path="res://gameplay/base_state_machine/base_states/movement/airborne/airborne.gd" id="2_h1m75"]
+[ext_resource type="Script" uid="uid://d2dfjgcvb2ijq" path="res://gameplay/base_state_machine/base_states/movement/grounded/grounded.gd" id="2_lq6bm"]
+[ext_resource type="Script" uid="uid://cid6ko0dm3bjr" path="res://gameplay/base_state_machine/base_states/movement/airborne/fall/fall.gd" id="3_y87d0"]
+[ext_resource type="Script" uid="uid://wbhtoph63r4u" path="res://gameplay/base_state_machine/base_states/movement/grounded/jump/jump.gd" id="7_y87d0"]
+[ext_resource type="Script" uid="uid://br2xn3fwv3460" path="res://gameplay/base_state_machine/base_states/movement/grounded/crouch/crouch.gd" id="8_1aa7j"]
+[ext_resource type="Texture2D" uid="uid://8mlqg1x1udlj" path="res://assets/art/characters/guy.png" id="9_an5cp"]
 [ext_resource type="Script" uid="uid://dqmchn05d0oih" path="res://gameplay/character/guy/states/movement/guy_idle.gd" id="10_jdg48"]
 [ext_resource type="Script" uid="uid://dhltv78g0n61y" path="res://gameplay/character/guy/states/combat/guy_jab.gd" id="10_y36me"]
-[ext_resource type="Script" uid="uid://b3j7ra7al3bn" path="res://gameplay/base_state_machine/base_states/grounded/combat/grounded_combat.gd" id="11_7iiuk"]
+[ext_resource type="Script" uid="uid://b3j7ra7al3bn" path="res://gameplay/base_state_machine/base_states/combat/grounded_combat.gd" id="11_7iiuk"]
 [ext_resource type="Script" uid="uid://ql1lsg7utuk4" path="res://gameplay/character/guy/states/movement/guy_walk.gd" id="11_thu45"]
-[ext_resource type="Script" uid="uid://d23jbkcq087vf" path="res://gameplay/character/guy/states/combat/guy_hook.gd" id="13_4ughl"]
-[ext_resource type="Script" uid="uid://cb7f4hmmggkc7" path="res://gameplay/base_state_machine/base_states/grounded/ouch/grounded_ouch.gd" id="13_6fb4b"]
+[ext_resource type="Script" uid="uid://d23jbkcq087vf" path="res://gameplay/character/guy/states/combat/guy_cross.gd" id="13_4ughl"]
+[ext_resource type="Script" uid="uid://cb7f4hmmggkc7" path="res://gameplay/base_state_machine/base_states/ouch/ouch.gd" id="13_6fb4b"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dccpk"]
-atlas = ExtResource("9_an5cp")
-region = Rect2(0, 0, 32, 64)
+[sub_resource type="GDScript" id="GDScript_6fb4b"]
+script/source = "class_name GroundedMovementState
+extends State
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y36me"]
+
+var direction : float = 0.0
+
+
+func enter() -> void:
+	_propagate_enter()
+	direction = 0.0
+
+
+func exit() -> void:
+	direction = 0.0
+	_propagate_exit()
+
+
+func process() -> void:
+	_propagate_process()
+
+
+func physics_process() -> void:
+	_propagate_physics_process()
+
+	if has_parent_state():
+		direction = parent_state.direction
+
+	_handle_transitions()
+
+
+func _handle_transitions() -> void:
+	pass
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkp6v"]
 atlas = ExtResource("9_an5cp")
-region = Rect2(32, 0, 32, 64)
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdg48"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thu45"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h112"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_my41v"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imhk6"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(0, 64, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_an5cp"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkp6v")
+}],
+"loop": true,
+"name": &"cross",
+"speed": 5.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"crouch",
@@ -41,14 +96,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dccpk")
+"texture": SubResource("AtlasTexture_jdg48")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y36me")
+"texture": SubResource("AtlasTexture_thu45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h112")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_my41v")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 2.0
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imhk6")
+}],
+"loop": true,
+"name": &"jab",
+"speed": 5.0
 }, {
 "frames": [],
 "loop": true,
@@ -57,30 +126,30 @@ animations = [{
 }, {
 "frames": [],
 "loop": true,
-"name": &"move",
+"name": &"walk",
 "speed": 2.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_an5cp"]
-radius = 40.0
+radius = 28.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y36me"]
-size = Vector2(9.9282, 66)
+size = Vector2(9.9282, 55)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvsx1"]
-size = Vector2(9.9282, 47.19478)
+size = Vector2(9.9282, 40.587776)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7iiuk"]
 size = Vector2(9.9282, 47.19478)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_an5cp"]
-size = Vector2(9.9282, 40)
+size = Vector2(9.9282, 64.0285)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dccpk"]
-size = Vector2(9.9282, 40)
+size = Vector2(9.9282, 70.85935)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1aa7j"]
-size = Vector2(48, 16)
+size = Vector2(48, 6)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lq6bm"]
 radius = 34.0
@@ -89,12 +158,10 @@ height = 184.0
 [node name="Guy" unique_id=936889375 instance=ExtResource("1_qsnf0")]
 script = ExtResource("2_dccpk")
 combo_window = 1.5
-jab_duration = 0.05
-hook_duration = 0.05
-uppercut_duration = 0.2
+jab_duration = 0.15
+cross_duration = 0.2
 jab_hitbox_position = Vector2(0, 0)
-hook_hitbox_position = Vector2(0, 0)
-uppercut_hitbox_position = Vector2(0, 0)
+cross_hitbox_position = Vector2(0, 0)
 basic_attack_cooldown = 0.2
 
 [node name="JumpBufferTimer" parent="Timers/Misc" parent_id_path=PackedInt32Array(650038178) index="0" unique_id=1245549578]
@@ -106,118 +173,103 @@ one_shot = true
 
 [node name="StateMachine" parent="." index="1" unique_id=167204576 node_paths=PackedStringArray("initial_state")]
 unique_name_in_owner = true
-initial_state = NodePath("Grounded/GroundedMovement/Idle")
+initial_state = NodePath("Movement/Grounded/Idle")
 
-[node name="Airborne" type="Node" parent="StateMachine" index="0" unique_id=1230414814]
+[node name="Movement" type="Node" parent="StateMachine" index="0" unique_id=1146374969]
+script = SubResource("GDScript_6fb4b")
+
+[node name="Airborne" type="Node" parent="StateMachine/Movement" index="0" unique_id=1230414814]
 script = ExtResource("2_h1m75")
-metadata/_custom_type_script = "uid://d1a4td2u04rch"
 
-[node name="AirborneMovement" type="Node" parent="StateMachine/Airborne" index="0" unique_id=1561886630]
-script = ExtResource("4_rghhw")
-metadata/_custom_type_script = "uid://dbp0ttp2aws56"
-
-[node name="Fall" type="Node" parent="StateMachine/Airborne/AirborneMovement" index="0" unique_id=2032910580]
+[node name="Fall" type="Node" parent="StateMachine/Movement/Airborne" index="0" unique_id=2032910580]
 script = ExtResource("3_y87d0")
-metadata/_custom_type_script = "uid://cid6ko0dm3bjr"
 
-[node name="AirborneCombat" type="Node" parent="StateMachine/Airborne" index="1" unique_id=2011374419]
-script = ExtResource("6_jdg48")
-metadata/_custom_type_script = "uid://crv6jkk70460e"
-
-[node name="AirborneOuch" type="Node" parent="StateMachine/Airborne" index="2" unique_id=812214627]
-script = ExtResource("7_thu45")
-metadata/_custom_type_script = "uid://l2ee0vrge74q"
-
-[node name="Grounded" type="Node" parent="StateMachine" index="1" unique_id=2053360011]
+[node name="Grounded" type="Node" parent="StateMachine/Movement" index="1" unique_id=2053360011]
 script = ExtResource("2_lq6bm")
-metadata/_custom_type_script = "uid://d2dfjgcvb2ijq"
 
-[node name="GroundedMovement" type="Node" parent="StateMachine/Grounded" index="0" unique_id=1146374969]
-script = ExtResource("6_dvsx1")
-metadata/_custom_type_script = "uid://hp7diaoxeed5"
-
-[node name="Idle" type="Node" parent="StateMachine/Grounded/GroundedMovement" index="0" unique_id=791687882]
+[node name="Idle" type="Node" parent="StateMachine/Movement/Grounded" index="0" unique_id=791687882]
 script = ExtResource("10_jdg48")
 metadata/_custom_type_script = "uid://dqmchn05d0oih"
 
-[node name="Walk" type="Node" parent="StateMachine/Grounded/GroundedMovement" index="1" unique_id=793252079]
+[node name="Walk" type="Node" parent="StateMachine/Movement/Grounded" index="1" unique_id=793252079]
 script = ExtResource("11_thu45")
 metadata/_custom_type_script = "uid://ql1lsg7utuk4"
 
-[node name="Jump" type="Node" parent="StateMachine/Grounded/GroundedMovement" index="2" unique_id=44844379]
+[node name="Jump" type="Node" parent="StateMachine/Movement/Grounded" index="2" unique_id=44844379]
 script = ExtResource("7_y87d0")
-metadata/_custom_type_script = "uid://wbhtoph63r4u"
 
-[node name="Crouch" type="Node" parent="StateMachine/Grounded/GroundedMovement" index="3" unique_id=569448730]
+[node name="Crouch" type="Node" parent="StateMachine/Movement/Grounded" index="3" unique_id=569448730]
 script = ExtResource("8_1aa7j")
-metadata/_custom_type_script = "uid://br2xn3fwv3460"
 
-[node name="GroundedCombat" type="Node" parent="StateMachine/Grounded" index="1" unique_id=1327504328]
+[node name="Combat" type="Node" parent="StateMachine" index="1" unique_id=1327504328]
 script = ExtResource("11_7iiuk")
-metadata/_custom_type_script = "uid://b3j7ra7al3bn"
 
-[node name="Jab" type="Node" parent="StateMachine/Grounded/GroundedCombat" index="0" unique_id=616570044]
+[node name="Jab" type="Node" parent="StateMachine/Combat" index="0" unique_id=616570044]
 script = ExtResource("10_y36me")
 metadata/_custom_type_script = "uid://dhltv78g0n61y"
 
-[node name="Hook" type="Node" parent="StateMachine/Grounded/GroundedCombat" index="1" unique_id=190899921]
+[node name="Cross" type="Node" parent="StateMachine/Combat" index="1" unique_id=190899921]
 script = ExtResource("13_4ughl")
 metadata/_custom_type_script = "uid://d23jbkcq087vf"
 
-[node name="GroundedOuch" type="Node" parent="StateMachine/Grounded" index="2" unique_id=1307699335]
+[node name="Ouch" type="Node" parent="StateMachine" index="2" unique_id=1307699335]
 script = ExtResource("13_6fb4b")
-metadata/_custom_type_script = "uid://cb7f4hmmggkc7"
 
 [node name="Pivot" parent="." index="2" unique_id=1923331448]
 unique_name_in_owner = true
 
 [node name="Sprite" parent="Pivot" index="0" unique_id=2115755648]
+position = Vector2(40, 0)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_an5cp")
-animation = &"idle"
+animation = &"walk"
+metadata/_edit_lock_ = true
 
 [node name="Head" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="0" unique_id=934971465]
-position = Vector2(0, -47)
+position = Vector2(14.000004, -51)
 shape = SubResource("CircleShape2D_an5cp")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Torso" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="1" unique_id=785802579]
-position = Vector2(-2.0000005, 26.000004)
+position = Vector2(1.9073486e-06, 0)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_y36me")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="LeftArm" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="2" unique_id=788302951]
-position = Vector2(-13.999999, 26)
+position = Vector2(-10.999993, -3)
 rotation = 0.2617994
-scale = Vector2(0.9999998, 0.9999998)
+scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_dvsx1")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="RightArm" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="3" unique_id=1478751261]
-position = Vector2(10.000004, 26)
-rotation = -0.2617994
+position = Vector2(33, -11)
+rotation = 1.0471976
 scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_7iiuk")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="RightLeg" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="4" unique_id=470351983]
-position = Vector2(11, 78)
-rotation = -0.5235988
+position = Vector2(17.000015, 62.000004)
+rotation = -0.26179937
+scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_an5cp")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="LeftLeg" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="5" unique_id=434350572]
-position = Vector2(-9, 78)
-rotation = 0.2617994
+position = Vector2(-11.000005, 64.00001)
+rotation = 0.26179934
+scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_dccpk")
 debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox" parent_id_path=PackedInt32Array(901633141) index="0" unique_id=833572466]
-position = Vector2(64, 0)
+position = Vector2(46, -18)
 shape = SubResource("RectangleShape2D_1aa7j")
 debug_color = Color(1, 0, 0, 0.41960785)
 
 [node name="Collision" type="CollisionShape2D" parent="." index="3" unique_id=508983584]
+visible = false
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_lq6bm")

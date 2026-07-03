@@ -6,10 +6,7 @@ class_name StateMachine extends Node
 
 var states : Dictionary[String, State] = {}
 
-var current_state : State = null :
-	set(value):
-		current_state = value
-		character_parent.play_animation_according_to_state(value.name.to_lower())
+var current_state : State = null
 
 var previous_state : State = null
 

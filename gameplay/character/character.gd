@@ -50,6 +50,7 @@ extends CharacterBody2D
 
 @export_group("Misc")
 @export var jump_buffer_time : float = 0.15 ## In seconds.
+@export var face_opponent : bool = false
 
 
 var state : State = null
@@ -89,7 +90,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta : float) -> void:
-	_flip_according_to_move_direction()
+	_handle_sprite_face()
 	move_and_slide()
 
 
@@ -140,14 +141,18 @@ func _init_duration_timers() -> void:
 	skill_ultimate_duration_timer.one_shot = true
 
 
-func _flip_according_to_move_direction() -> void:
-	direction = state_machine.facing_direction
-	if direction == -1:
-		pivot.scale.x = -1
-	elif direction == 1:
-		pivot.scale.x = 1
+func _handle_sprite_face() -> void:
+	if face_opponent: # Sprite faces opponent
+		pass
+	else: # Sprite faces movement direction
+		direction = state_machine.facing_direction
+		if direction == -1:
+			pivot.scale.x = -1
+		elif direction == 1:
+			pivot.scale.x = 1
 
 
+# Move this to individual States so more control
 func play_animation_according_to_state(anim : String) -> void:
 	await ready
 	if sprite.sprite_frames.has_animation(anim):

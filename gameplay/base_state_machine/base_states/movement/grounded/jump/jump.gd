@@ -1,9 +1,10 @@
-class_name AirborneOuchState
+class_name JumpState
 extends State
 
 
 func enter() -> void:
 	_propagate_enter()
+	character.sprite.play("jump")
 
 
 func exit() -> void:
@@ -16,6 +17,9 @@ func process() -> void:
 
 func physics_process() -> void:
 	_propagate_physics_process()
+
+	character.velocity.y -= character.jump_velocity
+
 	_handle_transitions()
 
 
