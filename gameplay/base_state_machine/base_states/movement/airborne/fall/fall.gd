@@ -5,17 +5,26 @@ extends State
 var direction : float = 0.0
 var gravity_multiplier : float = 0.0
 
+#var actually_falling : bool = false
+
 
 func enter() -> void:
 	_propagate_enter()
+
 	direction = 0.0
 	gravity_multiplier = 0.0
+	#actually_falling = true
+
+	# Delay before changing animations from "jump" to "fall"
+	await get_tree().create_timer(0.04).timeout
 	character.sprite.play("fall")
 
 
 func exit() -> void:
 	direction = 0.0
 	gravity_multiplier = 0.0
+	#actually_falling = false
+
 	_propagate_exit()
 
 
@@ -34,6 +43,13 @@ func physics_process() -> void:
 
 	# Falling
 	character.velocity.y += Util.GRAVITY * gravity_multiplier
+
+	## Play "fall" animation only when actually falling (velocity.y > 0)
+	#if character.velocity.y > 0.0 and actually_falling:
+		#character.sprite.play("fall")
+		#actually_falling = false
+		## ^^^ Ensures this code block only runs once
+		## Idk, optimization? /probably saves like 1 byte of memory idk
 
 	# Moving
 	if has_parent_state():

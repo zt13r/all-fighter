@@ -2,11 +2,14 @@ class_name Character
 extends CharacterBody2D
 
 
+signal health_changed(new : float)
+
+
 @export_group("Display")
 @export var nickname : String = ""
 @export_multiline var description : String = ""
 
-@export_group("Base Parameters")
+@export_group("Base Stats")
 @export var base_health : float = 100.0
 @export var base_movement_speed : float = 800.0
 @export var base_jump_velocity : float = 750.0
@@ -55,7 +58,11 @@ extends CharacterBody2D
 
 var state : State = null
 
-var health : float = 0.0
+var health : float :
+	set(value):
+		health = clampf(value, 0.0, 100.0)
+		health_changed.emit(health)
+
 var movement_speed : float = 0.0
 var jump_velocity : float = 0.0
 var crouch_speed : float = 0.0
@@ -152,13 +159,12 @@ func _handle_sprite_face() -> void:
 			pivot.scale.x = 1
 
 
-# Move this to individual States so more control
-func play_animation_according_to_state(anim : String) -> void:
-	await ready
-	if sprite.sprite_frames.has_animation(anim):
-		sprite.play(anim)
-	else:
-		push_error("Sprite has no '", anim, "' animation.")
+func take_damage(amount : float) -> void:
+	print("%s health: %.2f -> %.2f" % [name, health, health - amount])
+	health -= amount
+	if health <= 0.0:
+		#die()
+		pass
 
 
 func _on_basic_attack_duration_timer_timeout() -> void:

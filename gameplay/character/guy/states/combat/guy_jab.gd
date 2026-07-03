@@ -11,6 +11,8 @@ func enter() -> void:
 	guy.basic_attack_duration_timer.wait_time = guy.jab_duration
 	guy.basic_attack_duration_timer.start()
 
+	guy.hitbox.damage = guy.jab_damage
+
 	if root_fsm.previous_state.parent_state is AirborneState:
 		pass # play "airborne jab"
 	else:
@@ -22,8 +24,10 @@ func enter() -> void:
 
 func exit() -> void:
 	guy.basic_attack_duration_timer.stop()
+
 	# Walking enabled
 	guy.set_physics_process(true)
+
 	_propagate_exit()
 
 

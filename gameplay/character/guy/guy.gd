@@ -5,6 +5,10 @@ extends Character
 @export_group("Basic Attack Combo Parameters")
 @export var combo_window : float = 1.55
 
+@export_subgroup("Damage")
+@export var jab_damage : float = 1.0
+@export var cross_damage : float = 1.8
+
 @export_subgroup("Duration")
 @export var jab_duration : float = 0.01
 @export var cross_duration : float = 0.01
