@@ -4,15 +4,21 @@ extends State
 
 var direction : float = 0.0
 
+var moving : bool = false
+
 
 func enter() -> void:
 	_propagate_enter()
+
 	direction = 0.0
-	character.sprite.play("crouch")
+	moving = false
+	character.sprite.play("crouch_idle")
 
 
 func exit() -> void:
 	direction = 0.0
+	moving = false
+
 	_propagate_exit()
 
 
@@ -26,6 +32,11 @@ func physics_process() -> void:
 	if has_parent_state():
 		direction = parent_state.direction
 	character.velocity.x = direction * character.crouch_speed
+
+	# Walking while crouching animation
+	if character.velocity.x != 0.0 and not moving:
+		character.sprite.play("crouch_walk")
+		moving = true
 
 	_handle_transitions()
 

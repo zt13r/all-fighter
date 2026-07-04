@@ -50,13 +50,21 @@ func _handle_transitions() -> void:
 	pass
 "
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rghhw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkp6v"]
 atlas = ExtResource("9_an5cp")
-region = Rect2(64, 128, 64, 64)
+region = Rect2(64, 192, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6fb4b"]
 atlas = ExtResource("9_an5cp")
-region = Rect2(64, 64, 64, 64)
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ughl"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imhk6"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(64, 128, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdg48"]
 atlas = ExtResource("9_an5cp")
@@ -74,32 +82,59 @@ region = Rect2(128, 0, 64, 64)
 atlas = ExtResource("9_an5cp")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8biym"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0nvt"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ij0an"]
 atlas = ExtResource("9_an5cp")
 region = Rect2(0, 128, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ughl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_robi1"]
 atlas = ExtResource("9_an5cp")
 region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pknsx"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppqch"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37vjb"]
+atlas = ExtResource("9_an5cp")
+region = Rect2(192, 64, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_an5cp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rghhw")
+"texture": SubResource("AtlasTexture_mkp6v")
 }],
 "loop": true,
 "name": &"cross",
 "speed": 1.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fb4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ughl")
+}],
+"loop": true,
+"name": &"crouch_idle",
+"speed": 5.0
+}, {
 "frames": [],
 "loop": true,
-"name": &"crouch",
+"name": &"crouch_walk",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6fb4b")
+"texture": SubResource("AtlasTexture_imhk6")
 }],
 "loop": true,
 "name": &"fall",
@@ -124,7 +159,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8biym")
+"texture": SubResource("AtlasTexture_f0nvt")
 }],
 "loop": true,
 "name": &"jab",
@@ -132,13 +167,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ughl")
+"texture": SubResource("AtlasTexture_ij0an")
 }],
 "loop": false,
 "name": &"jump",
 "speed": 4.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_robi1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pknsx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppqch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37vjb")
+}],
 "loop": true,
 "name": &"walk",
 "speed": 4.0
@@ -238,7 +285,7 @@ unique_name_in_owner = true
 position = Vector2(40, 0)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_an5cp")
-animation = &"fall"
+animation = &"crouch_idle"
 metadata/_edit_lock_ = true
 
 [node name="Head" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(130310705) index="0" unique_id=934971465]

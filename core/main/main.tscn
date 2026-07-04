@@ -33,10 +33,28 @@ layer = 10
 
 [node name="HudRoot" type="Control" parent="HudLayer" unique_id=1071303805]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+
+[node name="Player1" type="Control" parent="HudLayer/HudRoot" unique_id=808089633]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player2" type="Control" parent="HudLayer/HudRoot" unique_id=1121157006]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=459094456]
 process_mode = 2
@@ -44,9 +62,11 @@ layer = 20
 
 [node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=1912284769]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=295142211]
@@ -55,9 +75,11 @@ layer = 100
 
 [node name="TransitionRoot" type="Control" parent="TransitionLayer" unique_id=603156681]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="DebugLayer" type="CanvasLayer" parent="." unique_id=1472451507]
@@ -66,7 +88,9 @@ layer = 128
 
 [node name="DebugRoot" type="Control" parent="DebugLayer" unique_id=1956719604]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
