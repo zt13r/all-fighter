@@ -4,6 +4,7 @@ extends State
 
 func enter() -> void:
 	_propagate_enter()
+
 	character.sprite.play("jump")
 
 

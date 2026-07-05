@@ -37,6 +37,9 @@ func physics_process() -> void:
 	if character.velocity.x != 0.0 and not moving:
 		character.sprite.play("crouch_walk")
 		moving = true
+	elif character.velocity.x == 0.0 and moving:
+		character.sprite.play("crouch_idle")
+		moving = false
 
 	_handle_transitions()
 

@@ -1,5 +1,5 @@
-class_name GuyIdleState
-extends IdleState
+class_name GuyCrouchState
+extends CrouchState
 
 
 var guy : GuyCharacter = null

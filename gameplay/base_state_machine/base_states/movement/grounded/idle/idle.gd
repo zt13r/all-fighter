@@ -7,7 +7,11 @@ var input : float = 0.0
 
 func enter() -> void:
 	_propagate_enter()
+
 	input = 0.0
+	if not character.is_node_ready():
+		await character.ready
+	character.sprite.play("idle")
 
 
 func exit() -> void:

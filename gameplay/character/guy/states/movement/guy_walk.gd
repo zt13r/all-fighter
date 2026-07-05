@@ -8,7 +8,6 @@ var guy : GuyCharacter = null
 func enter() -> void:
 	super()
 	guy = character as GuyCharacter
-	guy.sprite.play("walk")
 
 
 func _handle_transitions() -> void:

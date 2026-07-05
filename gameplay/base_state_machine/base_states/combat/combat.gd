@@ -1,4 +1,4 @@
-class_name GroundedCombatState
+class_name CombatState
 extends State
 
 

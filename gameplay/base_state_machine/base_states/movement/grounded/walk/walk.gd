@@ -7,7 +7,9 @@ var direction : float = 0.0
 
 func enter() -> void:
 	_propagate_enter()
+
 	direction = 0.0
+	character.sprite.play("walk")
 
 
 func exit() -> void:
