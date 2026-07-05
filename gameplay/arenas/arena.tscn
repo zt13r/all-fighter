@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://3g1xx3na6enq"]
+
+[ext_resource type="Script" uid="uid://cp8osyegqdii0" path="res://gameplay/arenas/arena.gd" id="1_ilesg"]
+[ext_resource type="Texture2D" uid="uid://ct4nek1evajak" path="res://assets/art/icon.svg" id="2_d5mcm"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ilesg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ilesg"]
+size = Vector2(400, 32)
+
+[node name="Arena" type="Node2D" unique_id=205451160]
+script = ExtResource("1_ilesg")
+
+[node name="Spawn" type="Node2D" parent="." unique_id=837009350]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Player1Spawn" type="Marker2D" parent="Spawn" unique_id=886323031]
+unique_name_in_owner = true
+position = Vector2(160, 448)
+
+[node name="Player2Spawn" type="Marker2D" parent="Spawn" unique_id=930388564]
+unique_name_in_owner = true
+position = Vector2(992, 448)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=471504676]
+position = Vector2(576, 608)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Collision" type="CollisionShape2D" parent="Floor" unique_id=514663486]
+shape = SubResource("WorldBoundaryShape2D_ilesg")
+
+[node name="Platform" type="StaticBody2D" parent="." unique_id=263098824]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="Platform" unique_id=701271259]
+position = Vector2(576, 384)
+scale = Vector2(3.125, 0.25)
+texture = ExtResource("2_d5mcm")
+
+[node name="Collision" type="CollisionShape2D" parent="Platform" unique_id=945751454]
+position = Vector2(576, 384)
+shape = SubResource("RectangleShape2D_ilesg")

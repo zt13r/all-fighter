@@ -11,12 +11,18 @@ func enter() -> void:
 	guy.basic_attack_duration_timer.wait_time = guy.jab_duration
 	guy.basic_attack_duration_timer.start()
 
-	guy.hitbox.damage = guy.jab_damage
-
 	if root_fsm.previous_state.parent_state is AirborneState:
 		pass # play "airborne jab"
 	else:
-		guy.sprite.play("jab") # grounded jab?
+		# grounded jab?
+		guy.sprite.play("jab")
+		guy.redtangle_hitbox.shape.size = guy.jab_hitbox_size
+		guy.redtangle_hitbox.position = guy.to_global(guy.jab_hitbox_position)
+
+	print("j: ", guy.redtangle_hitbox.global_position)
+
+	guy.hitbox.damage = guy.jab_damage
+	guy.hitbox.enable()
 
 	# Can't walk while attacking
 	guy.set_physics_process(false)
@@ -27,6 +33,8 @@ func exit() -> void:
 
 	# Walking enabled
 	guy.set_physics_process(true)
+
+	guy.hitbox.disable()
 
 	_propagate_exit()
 

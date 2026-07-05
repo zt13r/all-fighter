@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://js300hrbbgdc" path="res://gameplay/character/character.gd" id="1_qqr4u"]
 [ext_resource type="Script" uid="uid://cufp8tes03mtu" path="res://gameplay/base_state_machine/state_machine.gd" id="2_15w7j"]
-[ext_resource type="Script" uid="uid://cof3vg7kuwka2" path="res://gameplay/components/hitbox/hitbox.gd" id="3_5ox30"]
-[ext_resource type="Script" uid="uid://xp8dcyfpo2gf" path="res://gameplay/components/hurtbox/hurtbox.gd" id="4_h7e7v"]
+[ext_resource type="PackedScene" uid="uid://cwotgr4gs8gsy" path="res://gameplay/components/hitbox/hitbox.tscn" id="3_5ox30"]
+[ext_resource type="PackedScene" uid="uid://cexk3woowaoqx" path="res://gameplay/components/hurtbox/hurtbox.tscn" id="4_h7e7v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5ox30"]
 animations = []
 
 [node name="Character" type="CharacterBody2D" unique_id=936889375]
+collision_layer = 2
 script = ExtResource("1_qqr4u")
 
 [node name="Timers" type="Node" parent="." unique_id=1378299738]
@@ -73,15 +74,11 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_5ox30")
 animation = &""
 
-[node name="Hurtbox" type="Area2D" parent="Pivot" unique_id=130310705]
+[node name="Hurtbox" parent="Pivot" unique_id=2064079477 instance=ExtResource("4_h7e7v")]
 unique_name_in_owner = true
-script = ExtResource("4_h7e7v")
-metadata/_custom_type_script = "uid://xp8dcyfpo2gf"
 
-[node name="Hitbox" type="Area2D" parent="Pivot" unique_id=901633141]
+[node name="Hitbox" parent="Pivot" unique_id=2031754514 instance=ExtResource("3_5ox30")]
 unique_name_in_owner = true
-script = ExtResource("3_5ox30")
-metadata/_custom_type_script = "uid://cof3vg7kuwka2"
 
 [connection signal="timeout" from="Timers/DurationTimers/BasicAttackDurationTimer" to="." method="_on_basic_attack_duration_timer_timeout"]
 [connection signal="timeout" from="Timers/DurationTimers/SkillOneDurationTimer" to="." method="_on_skill_one_duration_timer_timeout"]

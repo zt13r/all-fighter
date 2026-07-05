@@ -13,6 +13,10 @@ extends Character
 @export var jab_duration : float = 0.01
 @export var cross_duration : float = 0.01
 
+@export_subgroup("Hitbox Size")
+@export var jab_hitbox_size : Vector2 = Vector2.ZERO
+@export var cross_hitbox_size : Vector2 = Vector2.ZERO
+
 @export_subgroup("Hitbox Position")
 @export var jab_hitbox_position : Vector2 = Vector2.ZERO
 @export var cross_hitbox_position : Vector2 = Vector2.ZERO
@@ -25,26 +29,6 @@ func _init_character() -> void:
 	super()
 	basic_attack_combo_timer.wait_time = combo_window
 	basic_attack_combo_timer.one_shot = true
-
-	# test ?
-	_print_all_markers($HitboxMarkers)
-
-
-func _print_all_markers(node : Node) -> void:
-	var descendants : Array[Node] = Util.get_descendants(node)
-	var markers : Array[Marker2D] = []
-
-	for desc in descendants:
-		if desc is Marker2D:
-			markers.append(desc)
-
-	print("Hitbox markers: ", markers.size())
-
-	# to-do for all states:
-	# - get hitbox marker stuff
-	# - set hitbox and hurtbox to hitbox and hurtbox marker's POSITION
-	# - set hitbox and hurtbox to hitbox and hurtbox marker's ROTATION
-	# - profit
 
 
 func _on_basic_attack_duration_timer_timeout() -> void:

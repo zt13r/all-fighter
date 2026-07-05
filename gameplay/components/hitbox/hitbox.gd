@@ -11,6 +11,16 @@ extends Area2D
 var damage : float = 0.0
 
 
+func enable() -> void:
+	monitorable = true
+	monitoring = true
+
+
+func disable() -> void:
+	monitorable = false
+	monitoring = false
+
+
 func _on_hurtbox_detected(hurtbox : Hurtbox) -> void:
 	if hurtbox.actor == actor: # No self-harm here folks
 		return

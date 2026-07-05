@@ -226,7 +226,7 @@ radius = 28.0
 size = Vector2(45, 123.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1aa7j"]
-size = Vector2(46, 11)
+size = Vector2(63, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fb4b"]
 size = Vector2(56, 176)
@@ -240,8 +240,8 @@ jab_duration = 0.15
 cross_duration = 0.2
 jab_hitbox_size = Vector2(52, 11)
 cross_hitbox_size = Vector2(63, 11)
-jab_hitbox_position = Vector2(51, -16.5)
-cross_hitbox_position = Vector2(65.5, -19.5)
+jab_hitbox_position = Vector2(4, 8)
+cross_hitbox_position = Vector2(4, 8)
 basic_attack_cooldown = 0.2
 
 [node name="JumpBufferTimer" parent="Timers/Misc" parent_id_path=PackedInt32Array(650038178) index="0" unique_id=1245549578]
@@ -303,7 +303,7 @@ unique_name_in_owner = true
 position = Vector2(40, 0)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_an5cp")
-animation = &"jab"
+animation = &"cross"
 metadata/_edit_lock_ = true
 
 [node name="Head" type="CollisionShape2D" parent="Pivot/Hurtbox" parent_id_path=PackedInt32Array(2064079477) index="0" unique_id=934971465]
@@ -321,13 +321,9 @@ debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Redtangle" type="CollisionShape2D" parent="Pivot/Hitbox" parent_id_path=PackedInt32Array(2031754514) index="0" unique_id=833572466]
 unique_name_in_owner = true
-position = Vector2(51, -16.5)
+position = Vector2(65.5, -19.5)
 shape = SubResource("RectangleShape2D_1aa7j")
 debug_color = Color(1, 0, 0, 0.41960785)
-
-[node name="HitboxMarkers" type="Node2D" parent="Pivot" index="3" unique_id=1241503333]
-
-[node name="JabMarker" type="Marker2D" parent="Pivot/HitboxMarkers" index="0" unique_id=127114803]
 
 [node name="Collision" type="CollisionShape2D" parent="." index="3" unique_id=508983584]
 unique_name_in_owner = true

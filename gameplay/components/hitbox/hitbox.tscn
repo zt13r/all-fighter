@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cof3vg7kuwka2" path="res://gameplay/components/hitbox/hitbox.gd" id="1_hixqh"]
 
 [node name="Hitbox" type="Area2D" unique_id=2031754514]
+collision_layer = 8
+collision_mask = 16
 script = ExtResource("1_hixqh")
 
 [connection signal="body_entered" from="." to="." method="_on_hurtbox_detected"]
